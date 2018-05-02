@@ -19,26 +19,13 @@ class Server:
 				exit(0)
 			conn.send(bytes(input(), 'utf-8'))
 
-	'''def handle(self, conn, add):
-		while True:
-			data = conn.recv(1024)
-			print(data)
-
-			if not data:
-				self.connections.remove(conn)
-				conn.close()'''
-
 	def run(self):
 		while True:
 			conn, add = self.sket.accept()
 			if conn is not None:
 				print("connected")
 				conn.send(bytes("connected", 'utf-8'))
-			'''self.connections.append(conn)
-			conThread = threading.Thread(target=self.handle, args=(conn,add))
-			conThread.daemon = True
-			conThread.start()
-			print(conn)'''
+				
 			iT = threading.Thread(target=self.sendMessage, args=(conn,))
 			iT.daemon = True
 			iT.start()
@@ -76,7 +63,6 @@ class Client:
 
 if len(sys.argv) > 1 :
 	c1 = Client(sys.argv[1])
-	#c1.run()
 else :
 	s1 = Server()
 	s1.run()
